@@ -3,10 +3,26 @@ import { AppContext } from '../context/AppContext';
 
 const Budget = () => {
     const { budget } = useContext(AppContext);
+    const { dispatch,remaining  } = useContext(AppContext);
+
+    function setBudget(e) {
+        dispatch({
+            type: 'SET_BUDGET',
+            payload: e,
+        });
+    }
 
     return (
         <div className='alert alert-secondary'>
-            <span>Budget: £{budget}</span>
+            <span>Budget: £
+            <input
+                required='required'
+                type='number'
+                value={budget}
+                style={{ marginLeft: '2rem' , size: 10}}
+                onChange={(event) => setBudget(event.target.value)}>
+                </input>
+            </span>
         </div>
     );
 };
