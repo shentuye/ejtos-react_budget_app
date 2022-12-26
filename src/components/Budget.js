@@ -6,10 +6,11 @@ const Budget = () => {
     const { dispatch,remaining  } = useContext(AppContext);
 
     function setBudget(e) {
+        e <= 20000?
         dispatch({
             type: 'SET_BUDGET',
             payload: e,
-        });
+        }):alert("The upper limit value is 20,000!");
     }
 
     return (
@@ -17,7 +18,8 @@ const Budget = () => {
             <span>Budget: £
             <input
                 required='required'
-                type='number'
+                type='number' 
+                step={10}               
                 value={budget}
                 style={{ marginLeft: '2rem' , size: 10}}
                 onChange={(event) => setBudget(event.target.value)}>
