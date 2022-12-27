@@ -2,15 +2,24 @@ import React, { useContext } from 'react';
 import { AppContext } from '../context/AppContext';
 
 const Budget = () => {
-    const { budget } = useContext(AppContext);
-    const { dispatch,remaining  } = useContext(AppContext);
+    const { dispatch, expenses, budget } = useContext(AppContext);
+    const totalExpenses = expenses.reduce((total, item) => {
+        return (total += item.cost);
+    }, 0);
 
     function setBudget(e) {
-        e <= 20000?
-        dispatch({
-            type: 'SET_BUDGET',
-            payload: e,
-        }):alert("The upper limit value is 20,000!");
+        if(e <= 20000){
+            if (e > totalExpenses){
+                dispatch({
+                    type: 'SET_BUDGET',
+                    payload: e,
+                });
+            }else{
+                alert("You cannot reduce the budget lower than the spending");
+            }
+        }else{
+            alert("The upper limit value is 20,000!");
+        };
     }
 
     return (
