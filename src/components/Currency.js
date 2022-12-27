@@ -7,33 +7,39 @@ const Currency = () => {
     const option_currency = [
         {value: "$", label: "$ Dollar"},
         {value: "£", label: "£ Pound"},
+        {value: "€", label: "€ Euro"},
+        {value: "₹", label: "₹ Ruppee"},
     ];
 
-    function setCurrency(e){
+    let option_text = option_currency.map((op)=>{
+        let label = "Currency (" + op.label + ")";;
+        let selected ="";
+        if (op.value === currency){                        
+            selected = true
+        }  
+        return <option value={op.value}  selected={selected}>
+               {label}            
+        </option>
+    });
 
+    function setCurrency(e){
+        console.log(e);
+        dispatch({
+            type: 'CHG_CURRENCY',
+            payload: e,
+        });
     }
 
     return (
         <div className='alert alert-primary'>
             <select 
-                className="selectpicker"
-                style={{"background-color":"transparent",  marginLeft: '2rem' , size: 10}}
-                required='required'     
-                noResultsText=""    
+                class="selectpicker"
+                style={{border: 0, 
+                       "background-color": "transparent",  
+                        marginLeft: '2rem' , size: 10}}
+                required='required'  
                 onChange={(event) => setCurrency(event.target.value)}>
-                {option_currency.map((op)=>{
-                    let label = "";
-                    let selected ="";
-                     if (op.value === currency){
-                        label = "Currency (" + op.label + ")";
-                        selected = true
-                    }else{
-                        label =op.label;
-                    }     
-                    return <option value={op.value} selected={selected}>
-                           {label}            
-                    </option>
-                })}
+                {option_text}
             </select>
         </div>
     );
